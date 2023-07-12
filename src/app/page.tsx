@@ -19,6 +19,7 @@ export const getProductData = async () => {
 
 interface IProduct {
   title: string;
+  _id: string;
   description: string;
   price: number;
   image: IImage;
