@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const GET = async (request: Request) => {
-
+export async function GET(request: Request) {
+    return new Response('cart, Next.js!')
 }
