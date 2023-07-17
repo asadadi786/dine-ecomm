@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { client } from "@/lib/sanityClient";
 import { Image as IImage } from "sanity";
-import ProductCart from "./ProductCart";
+import ProductCart from "../components/ProductCart";
+import React from "react";
 
 const getProductData = async () => {
   const res = await client.fetch(`*[_type=="product"]{

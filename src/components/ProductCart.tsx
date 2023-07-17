@@ -1,12 +1,19 @@
 "use client";
-
 import Image from "next/image";
 import { urlForImage } from "../../sanity/lib/image";
 import { FC } from "react";
+import AddToCart from "./AddToCart";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store/store";
+//import { addToCart } from "@/store/slice/cartSlice";
 
 const ProductCart: FC<{ item: any }> = ({ item }) => {
+  // const addtoCartValue = useSelector((state: RootState) => {
+  //   state.cart.totalAmount;
+  // });
+
   const handleAddToCart = async () => {
-    const res = await fetch("/api/cart", {
+    const res = await fetch("api/cart", {
       method: "POST",
       body: JSON.stringify({
         product_id: item._id,
@@ -34,6 +41,7 @@ const ProductCart: FC<{ item: any }> = ({ item }) => {
       >
         Add to Cart
       </button>
+      ;{/* <AddToCart item={item} /> */}
     </>
   );
 };

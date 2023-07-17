@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.14.2",
     "@types/node": "20.4.1",
@@ -22,6 +23,7 @@
     "next-sanity": "^5.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.1.1",
     "sanity": "^3.14.2",
     "styled-components": "5.2",
     "typescript": "5.1.6"
