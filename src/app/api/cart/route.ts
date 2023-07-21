@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
     if (!user_id) {
         setCookies.set("user_id", uid);//this function will save cookies in browser
     }
-
     try {
         const res = await db.insert(cartTable).values({
             product_id: req.product_id,

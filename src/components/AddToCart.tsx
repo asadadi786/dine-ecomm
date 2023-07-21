@@ -1,6 +1,10 @@
 "use client";
 // import {button} from './ui/button';
 import { FC } from "react";
+import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { cartActions } from "@/store/slice/cartSlice";
+import toast from "react-hot-toast";
 
 const AddToCart: FC<{ item: any }> = ({ item }) => {
   const handleAddToCart = async () => {
@@ -15,15 +19,14 @@ const AddToCart: FC<{ item: any }> = ({ item }) => {
     console.log(result);
   };
 
+  const dispach = useDispatch();
+  const addItem = () => {
+    dispach(cartActions.addToCart({ quantity: 1 }));
+    toast.success("Product Added Successfully");
+  };
   return (
     <>
-      <button
-        onClick={handleAddToCart}
-        className="border py-2 px-6 rounded bg-blue-600 text-white"
-      >
-        Add to Cart
-      </button>
-      ; ;
+      <Button onClick={addItem}>Add to Cart</Button>
     </>
   );
 };

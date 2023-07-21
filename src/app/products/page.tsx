@@ -1,9 +1,6 @@
 import { client } from "@/lib/sanityClient";
 import { Image as IImage } from "sanity";
-import ProductCart from "../components/ProductCart";
-import Hero from "@/views/Hero";
-import ProductList from "@/views/ProductList";
-import { dataset } from "../../sanity/env";
+import ProductCart from "@/components/ProductCart";
 
 const getProductData = async () => {
   const res = await client.fetch(`*[_type=="product"]{
@@ -30,15 +27,17 @@ interface IProduct {
   };
 }
 
-export default async function Home() {
-  const data: IProduct[] = await getProductData();
+const AllProducts = async () => {
+  const products: IProduct[] = await getProductData();
   return (
-    <>
-      <div>
-        <Hero />
-        {/* Products */}
-        <ProductList data={data} />
-      </div>
-    </>
+    <div className="grid grid-cols-[repeat(3,auto)] justify-center gap-x-10 py-10">
+      {products.map((product, index) => (
+        <div key={index}>
+          <ProductCart item={product} />
+        </div>
+      ))}
+    </div>
   );
-}
+};
+
+export default AllProducts;
