@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import StripeCheckOutButton from "../CheckOut";
 //import { Input } from "@/components/ui/input";
 
 const Header = () => {
@@ -31,6 +32,7 @@ const Header = () => {
         </li>
       </ul>
       {/* <Input /> */}
+      <div>        <StripeCheckOutButton /></div>
       <div className="h-10 w-10 rounded-full bg-gray-200 flex justify-center items-center relative">
         <span className="absolute right-1 top-0 rounded-full bg-red-500 h-5 w-5 text-white text-xs text-center">
           {cartValue}
