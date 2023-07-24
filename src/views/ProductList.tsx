@@ -8,7 +8,7 @@ const ProductList: FC<{ data: any }> = ({ data }) => {
   //console.log(productChecks);
   return (
     <div className="grid grid-cols-[repeat(3,auto)] justify-center gap-x-10 py-10">
-      {productChecks.map((product) => (
+      {productChecks.map((product: any) => (
         <div key={product}>
           <ProductCart item={product} />
         </div>
