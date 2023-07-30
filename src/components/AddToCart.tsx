@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { cartActions } from "@/store/slice/cartSlice";
 import toast from "react-hot-toast";
+import StripeCheckOutButton from "@/components/CheckOut";
 
 const AddToCart: FC<{ item: any }> = ({ item }) => {
   const handleAddToCart = async () => {
@@ -26,7 +27,10 @@ const AddToCart: FC<{ item: any }> = ({ item }) => {
   };
   return (
     <>
-      <Button onClick={addItem}>Add to Cart</Button>
+      <div>
+        <Button onClick={addItem}>Add to Cart</Button>
+
+      </div>
     </>
   );
 };

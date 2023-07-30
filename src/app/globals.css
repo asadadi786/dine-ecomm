@@ -76,3 +76,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer component{
+  ._center{
+    @apply flex justify-center items-center
+  }
+}

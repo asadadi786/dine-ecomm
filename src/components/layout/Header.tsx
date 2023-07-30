@@ -13,7 +13,7 @@ const Header = () => {
   const cartValue = useSelector((state: RootState) => state.cart.totalQuantity);
 
   return (
-    <div className="flex justify-between items-center py-6 px-8">
+    <div className="flex items-center justify-between px-8 py-6">
       <Link href="/">
         <Image src={logo} alt="DineMarketingLogo" className="w:40px" />
       </Link>
@@ -32,13 +32,14 @@ const Header = () => {
         </li>
       </ul>
       {/* <Input /> */}
-      <div>        <StripeCheckOutButton /></div>
-      <div className="h-10 w-10 rounded-full bg-gray-200 flex justify-center items-center relative">
-        <span className="absolute right-1 top-0 rounded-full bg-red-500 h-5 w-5 text-white text-xs text-center">
+
+      <div className="relative flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full">
+        <span className="absolute top-0 w-5 h-5 text-xs text-center text-white bg-red-500 rounded-full right-1">
           {cartValue}
         </span>
         <ShoppingCart className="w-6 h-6" />
       </div>
+      <StripeCheckOutButton />
     </div>
   );
 };
