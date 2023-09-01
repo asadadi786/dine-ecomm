@@ -20,11 +20,21 @@ export const product = {
             title: "Product Price",
             type: "number"
         },
-        {
-            name: 'image',
-            title: 'Product Image',
-            type: 'image'
-        },
+        defineField({
+            name: "image",
+            title: "Image",
+            type: "array",
+            of: [
+                {
+                    name: "img",
+                    type: "image",
+                    title: "Image",
+                    options: {
+                        hotspot: true,
+                    },
+                },
+            ],
+        }),
         defineField({
             name: 'tagLine',
             title: "Product Tagline",
@@ -39,6 +49,15 @@ export const product = {
                     type: "category"
                 }
             ]
-        })
+        }),
+        defineField({
+            name: "slug",
+            title: "Slug",
+            type: "slug",
+            options: {
+                source: "name",
+                maxLength: 96,
+            },
+        }),
     ]
 }

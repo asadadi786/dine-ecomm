@@ -1,4 +1,5 @@
 import ProductCart from "@/components/ProductCart";
+import { SanityProducts } from "@/interfaces";
 import { client } from "@/lib/sanityClient";
 import { Image as IImage } from "sanity";
 
@@ -16,19 +17,19 @@ const getProductData = async () => {
   return res;
 };
 
-interface IProduct {
-  title: string;
-  _id: string;
-  description: string;
-  price: number;
-  image: IImage;
-  category: {
-    name: string;
-  };
-}
+// interface SanityProducts {
+//   title: string;
+//   _id: string;
+//   description: string;
+//   price: number;
+//   image: IImage;
+//   category: {
+//     name: string;
+//   };
+// }
 
 const getProductByCategory = async (category: string) => {
-  const products: IProduct[] = await getProductData();
+  const products: SanityProducts[] = await getProductData();
   return products.filter((product) => product.category.name === category);
 };
 

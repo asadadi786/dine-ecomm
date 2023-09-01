@@ -5,29 +5,18 @@ import { urlForImage } from "../../sanity/lib/image";
 import { FC } from "react";
 import AddToCart from "./AddToCart";
 import Link from "next/link";
+import { SanityProducts } from "@/interfaces";
 //import { addToCart } from "@/store/slice/cartSlice";
 
-const ProductCart: FC<{ item: any }> = ({ item }) => {
-  const handleAddToCart = async () => {
-    const res = await fetch("api/cart", {
-      method: "POST",
-      body: JSON.stringify({
-        product_id: item._id,
-      }),
-    });
-
-    const result = await res.json();
-    console.log(result);
-  };
-
+const ProductCart: FC<{ item: SanityProducts }> = ({ item }) => {
   return (
     <>
-      <Link href={`/products/${item._id}`}>
+      <Link href={`/products/${item.slug.current}`}>
         <Image
+          src={urlForImage(item.image[0]).url()}
           width={200}
           height={300}
           className="max-h-[200px] object-cover object-top"
-          src={urlForImage(item.image).url()}
           alt="product"
         />
 
@@ -39,13 +28,7 @@ const ProductCart: FC<{ item: any }> = ({ item }) => {
             {item.category.name}
           </span>
         </p>
-        <AddToCart item={item} />
-        {/* <button
-        onClick={handleAddToCart}
-        className="border py-2 px-6 rounded bg-blue-600 text-white"
-      >
-        Add to Cart
-      </button> */}
+        {/* <AddToCart product={item} /> */}
       </Link>
     </>
   );
