@@ -1,3 +1,4 @@
+import { category } from './../../../../../sanity/category';
 import { Cart, cartTable, db } from "@/lib/drizzle";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,6 +19,7 @@ export const GET = async (request: NextRequest, { params: { userId } }: { params
 
             const cartItems = res.map((item) => ({
                 _id: item.product_id,
+                title: item.product_title,
                 price: item.price,
                 totalPrice: item.price * item.quantity,
                 userId: item.user_id,
@@ -27,12 +29,14 @@ export const GET = async (request: NextRequest, { params: { userId } }: { params
 
             // console.log("cartItems set to in GET: " + JSON.stringify(cartItems))
             const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+
             const totalPrice = cartItems.reduce((total, item) => total + item.totalPrice, 0);
-            const cartItemId = cartItems[0]._id
+            //const cartItemId = cartItems[0]._id
             // console.log("cartItems id: " + cartItemId)
-            return NextResponse.json({ cartItems, totalQuantity, totalPrice, cartItemId }, { status: 200 });
+            return NextResponse.json({ cartItems, totalQuantity, totalPrice }, { status: 200 });
         }
     } catch (error) {
+        console.log("error in cart->userId= " + error)
         return NextResponse.json({ error }, { status: 505 })
     }
 }

@@ -1,5 +1,10 @@
 "use client";
+import { Product } from "@/interfaces";
 import getStripePromise from "@/lib/stripe";
+
+interface IProps {
+  products: Product[];
+}
 
 const product = [
   {
@@ -22,17 +27,22 @@ const product = [
   },
 ];
 
-const StripeCheckOutButton = () => {
+const StripeCheckOutButton = (props: IProps) => {
+  console.log("props.product=" + JSON.stringify(props.products));
   const handleButton = async () => {
+    console.log("handleButton: ");
     const stripe = await getStripePromise();
-    const response = await fetch("/api/stripe-session", {
+    console.log("after handleButton: ");
+    const response = await fetch("/api/stripe-session/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-cache",
-      body: JSON.stringify(product),
+      body: JSON.stringify(props.products),
     });
     const data = await response.json();
+    console.log("data in checkout: " + data);
     if (data.session) {
+      console.log("in if data.session in checkout: " + data.session);
       stripe?.redirectToCheckout({ sessionId: data.session.id });
     }
   };

@@ -1,18 +1,37 @@
 import { Product } from "@/interfaces";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
+import { RootState } from "../store";
 export interface CartState {
     items: Array<Product>;
     totalAmount: number;
     totalQuantity: number;
+    isLoading: boolean;
+    error: any;
 }
 
 const initialState: CartState = {
     items: [],
     totalAmount: 0,
-    totalQuantity: 0
+    totalQuantity: 0,
+    isLoading: false,
+    error: null
 };
+
+export const fetchData = createAsyncThunk(
+    "cart/fetchdata",
+    async (userId: string) => {
+        const res = await fetch(`/api/cart/${userId}`)
+
+        if (!res.ok) {
+            console.log("failed to get data in Thunk")
+        }
+
+        const data = await res.json()
+
+        return data;
+    }
+)
 
 export const cartSlice = createSlice({
     name: "cart",
@@ -39,9 +58,10 @@ export const cartSlice = createSlice({
                 existingItem.totalPrice = totalPrice;
             }
         },
-        removeCartProduct: (state, actions: PayloadAction<string>) => {
+        removeCartProduct: (state: CartState, actions: PayloadAction<string>) => {
             const productId = actions.payload;
-            state.items = state.items.filter((item) => item._id === productId);
+
+            state.items = state.items.filter((item) => item._id !== productId);
             state.totalQuantity = state.items.reduce((total, item) => total + item.totalPrice, 0);
             state.totalAmount = state.items.reduce((total, item) => total + item.totalPrice, 0);
 
@@ -66,8 +86,28 @@ export const cartSlice = createSlice({
             state = initialState;
         },
     },
+
+    extraReducers: (builder) => {
+        builder.addCase(fetchData.pending, (state) => {
+            state.isLoading = true;
+        });
+
+        builder.addCase(fetchData.fulfilled, (state, action) => {
+            const { cartItems, totalQuantity, totalPrice } = action.payload;
+            state.items = cartItems;
+            state.totalQuantity = totalQuantity;
+            state.totalAmount = totalPrice;
+            state.isLoading = false;
+        });
+
+        builder.addCase(fetchData.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
+        })
+    }
 });
 
+export const selectIsLoading = (state: RootState) => state.cart.isLoading;
 // Action creators are generated for each case reducer function
 export const cartActions = cartSlice.actions;
 

@@ -2,96 +2,75 @@ import React from "react";
 import Image from "next/image";
 import productImage from "images/P1.webp";
 import { Button } from "@/components/ui/button";
+import Wrapper from "@/components/Wrapper";
 const ProductContent = () => {
   return (
-    <>
-      <section>
-        <div className="flex items-end justify-end text-5xl font-extrabold mr-52 font-col">
-          <h1>
-            <p>Unique and Authentic</p>
-            <p>Vintage Designer</p>
-            <p>Jewellery</p>
-          </h1>
+    <Wrapper>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="col-span-2 col-start-1 h-full w-full  xl:col-start-2">
+          <h3 className="text-[2.5rem] sm:text-[2.75rem] tracking-[0.03em] leading-[3rem]">
+            Unique and Authentic Vintage Designer Jewellery
+          </h3>
         </div>
-        <div className="flex flex-row mt-8 ml-24 mr-32">
-          <div className="w-1/2 ">
-            <div className="flex flex-row mt-6 justify-left items-left">
-              <div className="w-1/2">
-                <h3 className="mb-6 font-sans text-2xl font-bold text-gray-700">
-                  Using Good Quality
-                  <br />
-                  Materials
-                </h3>
-
-                <p className="text-xl text-gray-600">
-                  Lorem ipsum dolor sit
-                  <br /> amt, consectetur
-                  <br /> adipiscing elit.
+        <div className="col-span-2 grid grid-cols-2 gap-5">
+          <div className="relative col-span-2 h-full w-full  xl:col-span-1">
+            <div className="grid grid-cols-2 gap-10 mr-20">
+              <div className=" ">
+                <h4>Using Good Quality Materials</h4>
+                <p className="mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </div>
-
-              <div>
-                <h3 className="mb-6 font-sans text-2xl font-bold text-gray-700">
-                  100% Handmade
-                  <br /> Products
-                </h3>
-
-                <p className="text-xl text-gray-600">
-                  Lorem ipsum dolor sit
-                  <br /> amt, consectetur
-                  <br /> adipiscing elit.
+              <div className=" ">
+                <h4>100% Handmade Products</h4>
+                <p className="mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+              </div>
+              <div className=" ">
+                <h4>Lorem, ipsum dolor.</h4>
+                <p className="mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+              </div>
+              <div className=" ">
+                <h4>Lorem, ipsum dolor.</h4>
+                <p className="mt-5">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
               </div>
             </div>
-
-            <div className="flex flex-row mt-12 text-gray-700 justify-left items-left">
-              <div className="w-1/2 ">
-                <h3 className="mb-6 font-sans text-2xl font-bold ">
-                  Modern Fashion
-                  <br />
-                  Design
-                </h3>
-
-                <p className="text-xl text-gray-600">
-                  Lorem ipsum dolor sit
-                  <br /> amt, consectetur
-                  <br /> adipiscing elit.
-                </p>
+            <div className="absolute inset-0 overflow-hidden text-[5rem] sm:text-8xl  font-bold tracking-widest text-gray-200/70 -z-[10]">
+              Different From Others
+            </div>
+          </div>
+          <div className="col-span-2   xl:col-span-1">
+            <div className="flex flex-col h-full w-full items-center justify-center gap-5 sm:flex-row">
+              <div className="basis-1/2  w-full flex justify-center">
+                <Image
+                  src={productImage}
+                  alt=""
+                  width={250}
+                  height={250}
+                  className=""
+                />
               </div>
-              <div>
-                <h3 className="mb-6 font-sans text-2xl font-bold text-gray-700">
-                  Discount for Bulk
-                  <br />
-                  Orders
-                </h3>
-
-                <p className="text-xl text-gray-600">
-                  Lorem ipsum dolor sit
-                  <br /> amt, consectetur
-                  <br /> adipiscing elit.
+              <div className="flex flex-col justify-center items-center gap-5  basis-1/2 ">
+                <p className="tracking-wider leading-6">
+                  This piece is ethically crafted in our small family-owned
+                  workshop in Peru with unmatched attention to detail and care.
+                  The Natural color is the actual natural color of the fiber,
+                  undyed and 100% traceable.
                 </p>
+                <Button className=" w-28 bg-black p-2 m-3 text-sm text-white">
+                  See All Products
+                </Button>
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center w-1/2 ml-16">
-            <Image src={productImage} alt="Product Image" className="w=1/2" />
-            <div className="flex flex-col w-1/2 mt-5 ml-16 mr-10">
-              <div className="text-xl text-justify text-gray-600">
-                <p>
-                  This piece is ethically crafted in our <b /> small
-                  family-owned workshop in <b /> Peru with unmatched attention
-                  to detail and care.The Natural color is the actual natural
-                  color of the fiber, undyed and 100% traceable
-                </p>
-              </div>
-              <span className="mt-8">
-                <Button>See All Products</Button>
-              </span>
-            </div>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </Wrapper>
   );
 };
 

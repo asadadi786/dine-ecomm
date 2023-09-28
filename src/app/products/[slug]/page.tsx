@@ -9,6 +9,7 @@ import AddToCart from "@/components/AddToCart";
 import { Product, SanityProducts } from "@/interfaces";
 import ImageComponent from "@/components/utils/ImageComponent";
 import Wrapper from "@/components/Wrapper";
+import { auth } from "@clerk/nextjs";
 
 type Props = {
   params: {
@@ -17,10 +18,6 @@ type Props = {
 };
 
 const getProductData = async ({ params }: Props) => {
-  // const res = await client.fetch(
-  //   `*[_type=="product" && slug.current == "flex-push-button-bomber"][0]`
-  // );
-
   const res =
     await client.fetch(`*[_type=="product" && slug.current == "${params.slug}"][0]{
       _id,
@@ -50,8 +47,8 @@ const sizes = ["xs", "sm", "md", "lg", "xl"];
 // export default async function Page({ params }: { params: { id: string } }) {
 const SingleProduct = async ({ params }: Props) => {
   const product: Product = await getProductDetail({ params });
-  const user_Id = "df91529c-dcda-4b68-8e65-a11655b20334";
-
+  const { userId: user_id } = auth();
+  console.log("userrId = " + user_id);
   return (
     <Wrapper>
       <h1>Design Correction req</h1>
@@ -87,14 +84,18 @@ const SingleProduct = async ({ params }: Props) => {
                 })}
               </div>
               {/*Quantity*/}
-              <div className="flex mt-6 item-center gap-x-3">
+              {/* <div className="flex mt-6 item-center gap-x-3">
                 <h3 className="text-[10px] text-semibold">Quantity:</h3>
                 <Quantity />
-              </div>
+              </div> */}
               {/*AddTo Cart & Added Products calculated Price */}
 
               <div className="flex mt-5 item-center gap-x-4">
-                <AddToCart product={product} qty={1} userId={user_Id} />
+                <AddToCart
+                  product={product}
+                  qty={1}
+                  userId={user_id as string}
+                />
                 <h2 className="text-2xl font-bold">
                   ${product.price.toFixed(2)}
                 </h2>
@@ -109,15 +110,15 @@ const SingleProduct = async ({ params }: Props) => {
 
 export default SingleProduct;
 
-export async function generateStaticParams() {
-  const query = `*[_type == "product"]{
-    slug {
-      current
-    }
-  }`;
-  const res: SanityProducts[] = await client.fetch(query);
+// export async function generateStaticParams() {
+//   const query = `*[_type == "product"]{
+//     slug {
+//       current
+//     }
+//   }`;
+//   const res: SanityProducts[] = await client.fetch(query);
 
-  return res.map((product) => ({
-    slug: product.slug.current,
-  }));
-}
+//   return res.map((product) => ({
+//     slug: product.slug.current,
+//   }));
+// }

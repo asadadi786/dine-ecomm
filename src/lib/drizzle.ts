@@ -11,7 +11,7 @@ export const cartTable = pgTable("cart", {
     product_id: varchar("product_id", {
         length: 255
     }).notNull(),
-    //product_name: varchar("product_name", { length: 255 }).notNull(),
+    product_title: varchar("product_title", { length: 255 }).notNull(),
     //     subcat: varchar("subcat", { length: 255 }).notNull(),
     //   image: text("image").notNull(),
     quantity: integer("quantity").notNull(),

@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import StripeCheckOutButton from "@/components/CheckOut";
 import { Product, SanityProducts } from "@/interfaces";
 import { product } from "../../sanity/product";
+import { useAppDispatch } from "@/store/store";
+import Quantity from "./Quantity";
 
 type IProps = {
   product: Product;
@@ -18,20 +20,32 @@ type IProps = {
 
 // const AddToCart: FC<{ item: SanityProducts }> = ({ item }) => {
 const AddToCart = (props: IProps) => {
+  console.log("Quantity: " + props.qty);
   const [qty, setQty] = useState(1);
+
+  //const [qunatityNum, setQuantityNum] = useState(1);
+
+  console.log("Quantity state: " + qty);
+  console.log("userrId = " + props.userId);
+
+  const dispatch = useAppDispatch();
+
+  const subtract = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+    }
+  };
 
   const GetDataFromDB = async () => {
     const res = await fetch(`/api/cart/${props.userId}`);
 
     if (!res.ok) {
-      throw new Error("Failed to fetch data with userId");
+      console.log("Failed to fetch data with userId: " + res);
+      throw new Error("Failed to fetch data with userId: " + res);
     }
 
     const data = await res.json();
-
-    console.log(
-      "In GetDataFromDB: data.cartItems" + JSON.stringify(data.cartItems)
-    );
+    console.log("data: " + JSON.stringify(data));
     return data;
   };
 
@@ -42,8 +56,8 @@ const AddToCart = (props: IProps) => {
         method: "POST",
         body: JSON.stringify({
           product_id: props.product._id,
+          product_title: props.product.title,
           quantity: qty,
-          user_id: props.product.userId,
           price: props.product.price,
           totalPrice: props.product.price * props.qty,
         }),
@@ -63,21 +77,22 @@ const AddToCart = (props: IProps) => {
   const handleCartUpdate = async () => {
     try {
       const cartData = await GetDataFromDB();
-      console.log("In handleCartUpdate: cartData: " + JSON.stringify(cartData));
-      console.log(
-        "In handleCartUpdate: cartItems: " + JSON.stringify(cartData.cartItems)
-      );
+      //console.log("In handleCartUpdate: cartData: " + JSON.stringify(cartData));
+      // console.log(
+      //   "In handleCartUpdate: cartItems: " + JSON.stringify(cartData.cartItems)
+      // );
 
       const existingItem = cartData.cartItems.find(
         (item: any) => item._id === props.product._id
+        
       );
 
       console.log("existingItem: " + JSON.stringify(existingItem));
 
       console.log("props.product._id: " + props.product._id);
       if (existingItem) {
-        console.log("In existingItem: " + JSON.stringify(existingItem));
-        const newQuantity = existingItem.quantity + qty;
+        console.log("In existing item if ");
+        const newQuantity: number = existingItem.quantity + qty;
         const newTotalPrice = props.product.price * newQuantity;
 
         const res = await fetch("/api/cart", {
@@ -112,8 +127,31 @@ const AddToCart = (props: IProps) => {
     //success("Product Added Successfully");
     dispach(cartActions.addToCart({ product: props.product, quantity: qty }));
   };
+
   return (
     <>
+      <div className="flex item-center gap-x-2">
+        {/*Minus */}
+        <button
+          className="w-6 h-6 border rounded-full _center"
+          onClick={() => {
+            setQty(qty <= 1 ? 1 : qty - 1);
+          }}
+        >
+          -
+        </button>
+        {/*Number */}
+        <span className="text-sm">{qty}</span>
+        {/*Plus */}
+        <button
+          className="w-6 h-6 border rounded-full _center"
+          onClick={() => {
+            setQty(qty + 1);
+          }}
+        >
+          +
+        </button>
+      </div>
       <div>
         <Button onClick={addToCarts}>Add to Cart</Button>
       </div>

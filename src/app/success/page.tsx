@@ -1,7 +1,7 @@
 const CheckOutSuccess = () => {
   return (
-    <div>
-      <h1>Checkout Success</h1>
+    <div className="flex justify-center items-center w-full h-screen">
+      <h1 className="uppercase">Checkout Success</h1>
     </div>
   );
 };
